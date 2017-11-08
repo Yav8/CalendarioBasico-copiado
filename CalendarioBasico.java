@@ -6,29 +6,29 @@
  * @version (31-10-2017)
  */
 public class CalendarioBasico {
-    // Recoge el día.
-    private int dia;
-    // Recoge el mes.
-    private int mes;
-    // Recoge el año.
-    private int ano;
+    // Recoge el día desde la clase DisplayDosCaracteres.
+    private DisplayDosCaracteres dia;
+    // Recoge el mes desde la clase DisplayDosCaracteres.
+    private DisplayDosCaracteres mes;
+    // Recoge el año desde la clase DisplayDosCaracteres.
+    private DisplayDosCaracteres ano;
 
     /**
      * Inicializa objetos con la siguiente fecha: día 01, mes 01, año 01.
      */
     public CalendarioBasico() {
-        dia = 1;
-        mes = 1;
-        ano = 1;
+        dia = new DisplayDosCaracteres(31);
+        mes = new DisplayDosCaracteres(13);
+        ano = new DisplayDosCaracteres(100);
     }
 
     /**
      * Fija el día, mes y año que deseemos.
      */
     public void fijarFecha(int fijaDia, int fijaMes, int fijaAno) {
-        dia = fijaDia;
-        mes = fijaMes;
-        ano = fijaAno;
+        dia.setValorAlmacenado(fijaDia);
+        mes.setValorAlmacenado(fijaMes);
+        ano.setValorAlmacenado(fijaAno);
     }
 
     /**
@@ -41,17 +41,15 @@ public class CalendarioBasico {
      * pasaríamos al día 01, mes 01 y año 00.
      */
     public void avanzarFecha() {
-        dia += 1;
-        if(dia == 31) {
-            dia = 1;
-            mes += 1;
+        dia.incrementaValorAlmacenado();
+        if(dia.getValorAlmacenado() == 1) {
+            mes.incrementaValorAlmacenado();
         }
-        if(mes == 13) {
-            mes = 1;
-            ano += 1;
+        if(mes.getValorAlmacenado() == 1) {
+            ano.incrementaValorAlmacenado();
         }
-        if(ano == 100) {
-            ano = 0;
+        if(ano.getValorAlmacenado() == 0) {
+            ano.incrementaValorAlmacenado();
         }
     }
 
@@ -60,27 +58,27 @@ public class CalendarioBasico {
      * separando día, mes y año con guiones.
      */
     public String obtenerFecha() {
-        String fechaEntera;
-        if(dia < 10) {
-            fechaEntera = "0" + dia;
+        String fechaTotal = "";
+        if (dia.getValorAlmacenado() < 10) {
+            fechaTotal += dia.getTextoDelDisplay();
         }
         else {
-            fechaEntera = "" + dia;
+            fechaTotal += dia.getValorAlmacenado();
         }
-        fechaEntera += "-";
-        if(mes < 10) {
-            fechaEntera += "0" + mes;
-        }
-        else {
-            fechaEntera += "" + mes;
-        }
-        fechaEntera += "-";
-        if(ano < 10) {
-            fechaEntera += "0" + ano;
+        fechaTotal += "-";
+        if (mes.getValorAlmacenado() < 10) {
+            fechaTotal += mes.getTextoDelDisplay();
         }
         else {
-            fechaEntera += "" + ano;
+            fechaTotal += mes.getValorAlmacenado();
         }
-        return fechaEntera;
+        fechaTotal += "-";
+        if (ano.getValorAlmacenado() < 10) {
+            fechaTotal += ano.getTextoDelDisplay();
+        }
+        else {
+            fechaTotal += ano.getValorAlmacenado();
+        }
+        return fechaTotal;
     }
 } 
